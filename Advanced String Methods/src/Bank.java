@@ -10,7 +10,7 @@ public class Bank {
 	}
 
 	Scanner scan = new Scanner(System.in);
-	BankAccount[] clients = new BankAccount[5];
+	ArrayList<BankAccount> clients = new ArrayList<BankAccount>();
 	int numBankAccounts;
 
 	public void openBank() {
@@ -53,8 +53,8 @@ public class Bank {
 		System.out.println("Please enter your username to login.");
 		String username = scan.nextLine();
 		boolean found = false;
-		for (int i = 0; i < clients.length; i++) {
-			if (clients[i] != null && clients[i].getName().equals(username)) {
+		for (int i = 0; i < clients.size(); i++) {
+			if (clients.get(i) != null && clients.get(i).getName().equals(username)) {
 				found = true;
 				accountMenu(i);
 				break;
@@ -73,17 +73,17 @@ public class Bank {
 			int choice = scan.nextInt();
 			if (choice == 1) {
 				accWithdraw(acc);
-				if (clients[acc].getBalance() < 0) {
-					System.out
-							.println("Your balance is now ($" + String.format("%.2f", clients[acc].getBalance()) + ")");
+				if (clients.get(acc).getBalance() < 0) {
+					System.out.println(
+							"Your balance is now ($" + String.format("%.2f", clients.get(acc).getBalance()) + ")");
 				} else
-					System.out.println("Your balance is now $" + String.format("%.2f", clients[acc].getBalance()));
+					System.out.println("Your balance is now $" + String.format("%.2f", clients.get(acc).getBalance()));
 			} else if (choice == 2) {
 				accDeposit(acc);
-				if (clients[acc].getBalance() < 0) {
-					System.out.println("Your balance is now ($" + String.format("%.2f", clients[acc].getBalance()));
+				if (clients.get(acc).getBalance() < 0) {
+					System.out.println("Your balance is now ($" + String.format("%.2f", clients.get(acc).getBalance()));
 				} else
-					System.out.println("Your balance is now $" + String.format("%.2f", clients[acc].getBalance()));
+					System.out.println("Your balance is now $" + String.format("%.2f", clients.get(acc).getBalance()));
 			} else if (choice == 3) {
 				closeAcc(acc);
 				System.out.println("Your account is now closed.");
@@ -100,36 +100,35 @@ public class Bank {
 		System.out.println("Enter the name for your new account.");
 		String accName = scan.nextLine();
 		boolean found = false;
-
-		System.out.println("Enter the amount you want to deposit in your new account.");
-		double accAmount = scan.nextDouble();
-		for (int i = 0; i < clients.length; i++) {
-			if (clients[i] == null && found == false) {
+		for (int i = 0; i < clients.size(); i++) {
+			if (accName.equals(clients.get(i))) {
 				found = true;
-				clients[i] = new BankAccount(accName, accAmount);
+				System.out.println("There is an existing account named" + accName + ".");
 				break;
 			}
+		}
+		if(found = false){
+			System.out.println("Enter the amount you want to deposit.");
+			double amt = scan.nextDouble();
+		}
 
-		}
-		if (found == false) {
-			System.out.println("Unable to create your account, not enough room for a new account.");
-		}
 	}
 
 	public void accWithdraw(int acc) {
 		System.out.println("How much would you like to withdraw?");
 		double amount = scan.nextDouble();
-		clients[acc].withdraw(amount);
+		clients.get(acc).withdraw(amount);
 	}
 
 	public void accDeposit(int acc) {
 		System.out.println("How much would you like to deposit?");
 		double amount = scan.nextDouble();
-		clients[acc].deposit(amount);
+		clients.get(acc).deposit(amount);
 
 	}
 
 	public void closeAcc(int acc) {
-		clients[acc] = null;
+		clients.remove(acc);
+		System.out.println("Account now closed.");
 	}
 }
