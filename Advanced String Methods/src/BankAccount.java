@@ -25,7 +25,7 @@ public class BankAccount {
 	}
 
 	public String toString() {
-		return "Name: " + name + "\nBalance: " + balance;
+		return "Name: " + name + "\nBalance: $" + balance;
 	}
 
 	public String getName() {

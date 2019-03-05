@@ -2,6 +2,10 @@ import java.util.*;
 
 public class Bank {
 
+	Scanner scan = new Scanner(System.in);
+	ArrayList<BankAccount> clients = new ArrayList<BankAccount>();
+	
+	
 	public static void main(String[] args) {
 		System.out.println("Welcome to the most trusted bank in America");
 		Bank myBank = new Bank();
@@ -9,14 +13,7 @@ public class Bank {
 
 	}
 
-	Scanner scan = new Scanner(System.in);
-	ArrayList<BankAccount> clients = new ArrayList<BankAccount>();
-	int numBankAccounts;
-
-	public void openBank() {
-		menu();
-	}
-
+	
 	public void menu() {
 		while (true) {
 			System.out.println("1: Login" + "\n2: Open Account" + "\n3: Display all accounts" + "\n4: Exit");
@@ -32,11 +29,9 @@ public class Bank {
 				System.out.println("Are you sure you want to exit?" + "\n1: Yes" + "\n2: No");
 				int choice2 = scan.nextInt();
 				if (choice2 == 1) {
-					System.out.println("Closing");
+					System.out.println("Closing...\nclosed");
 					break;
-				} else {
-					menu();
-				}
+				} 
 
 			}
 		}
@@ -87,9 +82,9 @@ public class Bank {
 			} else if (choice == 3) {
 				closeAcc(acc);
 				System.out.println("Your account is now closed.");
-				menu();
+			
 			} else if (choice == 4) {
-				menu();
+				
 			}
 
 		}
@@ -101,15 +96,16 @@ public class Bank {
 		String accName = scan.nextLine();
 		boolean found = false;
 		for (int i = 0; i < clients.size(); i++) {
-			if (accName.equals(clients.get(i))) {
+			if (accName.equals(clients.get(i).getName())) {
 				found = true;
-				System.out.println("There is an existing account named" + accName + ".");
+				System.out.println("There is an existing account named " + accName + ".");
 				break;
 			}
 		}
-		if(found = false){
+		if(found == false){
 			System.out.println("Enter the amount you want to deposit.");
 			double amt = scan.nextDouble();
+			clients.add(new BankAccount(accName, amt));
 		}
 
 	}
